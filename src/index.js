@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import './tailwind.output.css';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
 
 import PasswordReset from "./password-reset/password-reset";
