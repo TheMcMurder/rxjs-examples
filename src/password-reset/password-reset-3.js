@@ -7,13 +7,17 @@ export default function PasswordReset() {
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [strength, setStrength] = useState({ strength: "TOO WEAK" });
+  const [requests, setRequests] = useState(0)
+  const [responses, setResponses] = useState(0)
   useEffect(() => {
     // new
     let promise;
     if (password === confirmPassword && password.length > 1) {
       setLoading(true);
       // NEW
+      setRequests((r) => r + 1)
       promise = ValidateStrength({ password }).then((result) => {
+        setResponses((r) => r + 1)
         const { value } = result;
         if (value < 2) {
           setLoading(false);
@@ -42,6 +46,14 @@ export default function PasswordReset() {
     <div>
       <h1>No RXJS</h1>
       <h2>Password strength: {loading ? "LOADING" : strength.strength}</h2>
+      <div>
+        <div>
+          requests: {requests}
+        </div>
+        <div>
+          responses: {responses}
+        </div>
+      </div>
       <input
         value={password}
         onChange={(e) => updatePassword(e.target.value)}
