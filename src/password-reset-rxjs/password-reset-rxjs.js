@@ -32,13 +32,14 @@ export default function PasswordResetRXJS() {
 
     const sub = mainPasswordValue$.subscribe(
       ({ strength, value }) => {
+        console.log('strength value', value)
         setStrengthValue(value)
         setStrength(strength)
       }
     )
     return () => sub.unsubscribe()
   }, []);
-  const disabled = strengthValue < 2 || loading || password !== confirmPassword
+  const disabled = strengthValue < 3 || loading || password !== confirmPassword
   return (
     <div>
       <h1>RXJS</h1>
