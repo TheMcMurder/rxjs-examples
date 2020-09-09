@@ -12,7 +12,7 @@ const rootElement = document.getElementById("root");
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <nav className='w-full bg-gray-500 flex justify-between px-8 h-8 items-center'> 
+      <nav style={{display: 'flex', justifyContent: 'space-between', padding: '0 24px', height: '24px', alignItems: 'center', background: 'gray'}}>
         <Link to='/react-1'>React 1</Link>
         <Link to='/react-2'>React 2</Link>
         <Link to='/react-3'>React 3</Link>
@@ -20,16 +20,24 @@ ReactDOM.render(
       </nav>
       <Switch>
         <Route path='/react-1'>
-          <PasswordReset />
+          <div style={{margin: '0px 8px'}}>
+            <PasswordReset />
+          </div>
         </Route>
         <Route path='/react-2'>
-          <PasswordReset2 />
+          <div style={{margin: '0px 8px'}}>
+            <PasswordReset2 />
+          </div>
         </Route>
         <Route path='/react-3'>
-          <PasswordReset3 />
+          <div style={{margin: '0px 8px'}}>
+            <PasswordReset3 />
+          </div>
         </Route>
         <Route path='/rxjs'>
-          <RxjsPasswordReset />
+          <div style={{margin: '0px 8px'}}>
+            <RxjsPasswordReset />
+          </div>
         </Route>
       </Switch>
 
