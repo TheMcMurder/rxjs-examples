@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Input from '../Input.js'
 
 export default function PasswordReset() {
   const [password, updatePassword] = useState("");
@@ -17,11 +16,11 @@ export default function PasswordReset() {
   return (
     <div>
       <h1>No RXJS</h1>
-      <Input
+      <input
         value={password}
         onChange={(e) => updatePassword(e.target.value)}
       />
-      <Input
+      <input
         value={confirmPassword}
         onChange={(e) => updateConfirmPassword(e.target.value)}
       />
