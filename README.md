@@ -1,2 +1,2 @@
 # rxjs-examples
-Created with CodeSandbox
+Examples comparing scenarios in rxjs and not
