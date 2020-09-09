@@ -23,7 +23,7 @@ export default function PasswordResetRXJS() {
         setReqs((requests) => [...requests, value])
         setStrengthValue(0)
       }),
-      switchMap(value => (ValidateStrength({ password: value }))),
+      switchMap(value => (ValidateStrength({ password: value, timeout: 2500 }))),
       tap(value => {
         setResps((responses) => [...responses, value.password])
         setLoading(false)
