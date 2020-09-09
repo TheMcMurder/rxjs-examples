@@ -2,13 +2,22 @@ import { random } from "lodash";
 
 export function ValidateStrength(data) {
   const randomExtraLongCall = Math.random() >= 0.5;
+  const { password, timeout } = data
+  let myTimeout
+  if (timeout) {
+    myTimeout = timeout
+  } else if (randomExtraLongCall) {
+    myTimeout = 8000
+  } else {
+    myTimeout = random(500, 1300)
+  }
   //const randomExtraLongCall = false;
   return new Promise((res) => {
     setTimeout(
       () => {
-        res(computeStrength(data.password));
+        res(computeStrength(password));
       },
-      randomExtraLongCall ? 8000 : random(500, 1000)
+      myTimeout
     );
   });
 }
