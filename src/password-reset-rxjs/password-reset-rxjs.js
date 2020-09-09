@@ -9,6 +9,8 @@ export default function PasswordResetRXJS() {
   const [loading, setLoading] = useState(false);
   const [strength, setStrength] = useState("TOO WEAK")
   const [strengthValue, setStrengthValue] = useState(0)
+  const [reqs, setReqs] = useState([])
+  const [resps, setResps] = useState([])
   const mainPassFieldRef = useRef()
   useEffect(() => {
     const mainPasswordValue$ = fromEvent(mainPassFieldRef.current, 'input').pipe(
@@ -16,12 +18,16 @@ export default function PasswordResetRXJS() {
       tap(value => updatePassword(value)),
       debounceTime(250),
       filter((value) => (value.length > 2)),
-      tap(_ => {
+      tap(value => {
         setLoading(true)
+        setReqs((requests) => [...requests, value])
         setStrengthValue(0)
       }),
       switchMap(value => (ValidateStrength({ password: value }))),
-      tap(_ => setLoading(false))
+      tap(value => {
+        setResps((responses) => [...responses, value.password])
+        setLoading(false)
+      })
     )
 
     const sub = mainPasswordValue$.subscribe(
@@ -32,10 +38,19 @@ export default function PasswordResetRXJS() {
     )
     return () => sub.unsubscribe()
   }, []);
+  const disabled = strengthValue < 2 || loading || password !== confirmPassword
   return (
     <div>
       <h1>RXJS</h1>
       <h2>Password strength: {loading ? "LOADING" : strength}</h2>
+      <div>
+        <div>
+          Requests: {JSON.stringify(reqs)}
+        </div>
+        <div>
+          Responses: {JSON.stringify(resps)}
+        </div>
+      </div>
       <input
         ref={mainPassFieldRef}
         value={password}
@@ -46,7 +61,7 @@ export default function PasswordResetRXJS() {
         onChange={(e) => updateConfirmPassword(e.target.value)}
       />
       <button
-        disabled={strengthValue < 2 || loading}
+        disabled={disabled}
         onClick={() => alert("API request to change password")}
       >
         Update Password
