@@ -7,17 +7,17 @@ export default function PasswordReset() {
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [strength, setStrength] = useState({ strength: "TOO WEAK" });
-  const [requests, setRequests] = useState(0)
-  const [responses, setResponses] = useState(0)
+  const [requests, setRequests] = useState([])
+  const [responses, setResponses] = useState([])
   useEffect(() => {
     // new
     let promise;
     if (password === confirmPassword && password.length > 1) {
       setLoading(true);
       // NEW
-      setRequests((r) => r + 1)
+      setRequests((r) => [...r, password])
       promise = ValidateStrength({ password }).then((result) => {
-        setResponses((r) => r + 1)
+        setResponses((r) => [...r, password])
         const { value } = result;
         if (value < 2) {
           setLoading(false);
@@ -48,10 +48,10 @@ export default function PasswordReset() {
       <h2>Password strength: {loading ? "LOADING" : strength.strength}</h2>
       <div>
         <div>
-          requests: {requests}
+          requests: {JSON.stringify(requests)}
         </div>
         <div>
-          responses: {responses}
+          responses: {JSON.stringify(responses)}
         </div>
       </div>
       <input
